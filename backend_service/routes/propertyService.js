@@ -86,7 +86,7 @@ addProperty = (req, res, next) => {
 	function (error, results, fields) {
 		if (results) {
 			return res.status(200).send({
-				"properties": results,
+				"property": results,
 				"message": `Property added successfully`
 			});
 		}
