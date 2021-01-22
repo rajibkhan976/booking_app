@@ -37,6 +37,7 @@ const Dashboard = ({}) => {
             {toggleAddForm &&
                 <AddProperty hideAddForm={hideAddForm} />
             }
+            <hr />
             <Footer />
         </div>
     );
