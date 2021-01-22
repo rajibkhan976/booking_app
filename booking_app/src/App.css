@@ -1,6 +1,6 @@
-.App {
+/* .App {
   text-align: center;
-}
+} */
 
 .App-logo {
   height: 40vmin;
@@ -35,4 +35,14 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.header-container {
+  background-color: #415A80;
+  max-width: 1200px;
+  min-height: 140px;
+}
+
+.header-text {
+  color: white;
 }
