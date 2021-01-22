@@ -1,15 +1,18 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as propertyActions from "../api_integration/propertyActions";
 
-const AddProperty = ({ hideAddForm }) => {
+const AddProperty = ({ hideAddForm, propertyActions }) => {
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const propertyimage = useRef(null);
+    const [propertyImages, setPropertyImages] = useState(null);
     const [price, setPrice] = useState("");
     const [type, setType] = useState("");
     const [rating, setRating] = useState(0);
     const [comments, setComments] = useState("");
-    const propertyavatar = useRef(null);
+    const [propertyAvatar, setPropertyAvatar] = useState(null);
     const [username, setUsername] = useState("");
     const [country, setCountry] = useState("");
     const [city, setCity] = useState("");
@@ -20,6 +23,9 @@ const AddProperty = ({ hideAddForm }) => {
         }
         if (event.target.id === "description") {
             setDescription(event.target.value);
+        }
+        if (event.target.id === "propertyimage") {
+            setPropertyImages(event.target.files);
         }
         if (event.target.id === "price") {
             setPrice(event.target.value);
@@ -33,6 +39,9 @@ const AddProperty = ({ hideAddForm }) => {
         if (event.target.id === "comments") {
             setComments(event.target.value);
         }
+        if (event.target.id === "propertyavatar") {
+            setPropertyAvatar(event.target.files[0]);
+        }
         if (event.target.id === "username") {
             setUsername(event.target.value);
         }
@@ -45,15 +54,57 @@ const AddProperty = ({ hideAddForm }) => {
     }
 
     const addProperty = (event) => {
-        console.log(title);
-        console.log(description);
-        console.log(price);
-        console.log(type);
-        console.log(rating);
-        console.log(comments);
-        console.log(username);
-        console.log(country);
-        console.log(city);
+        let formData = {};
+        if (title) {
+            Object.assign(formData, {'title': title.trim()});
+        }
+        if (description) {
+            Object.assign(formData, {'description': description.trim()});
+        }
+        if (price) {
+            Object.assign(formData, {'price': price.trim()});
+        }
+        if (type) {
+            Object.assign(formData, {'type': type.trim()});
+        }
+        if (rating) {
+            Object.assign(formData, {'rating': rating.trim()});
+        }
+        if (comments) {
+            Object.assign(formData, {'comments': comments.trim()});
+        }
+        if (username) {
+            Object.assign(formData, {'username': username.trim()});
+        }
+        if (country) {
+            Object.assign(formData, {'country': country.trim()});
+        }
+        if (city) {
+            Object.assign(formData, {'city': city.trim()});
+        }
+        let images = new FormData();
+        if (propertyImages) {
+            let propertyImgArr = [];
+            for (var i = 0; i < propertyImages.length; i++) {
+                images.append('propertyImages', propertyImages[i]);
+                propertyImgArr.push(propertyImages[i].name);
+            }
+            Object.assign(formData, {'image': propertyImgArr.join(", ")});
+        }
+        if (images) {
+            propertyActions.uploadPropertyImages(images);
+        }
+        let avatar = new FormData();
+        if (propertyAvatar) {
+            avatar.append('propertyAvatar', propertyAvatar);
+            Object.assign(formData, {'avatar': propertyAvatar.name});
+        }
+        if (avatar) {
+            propertyActions.uploadPropertyAvatar(avatar);
+        }
+        if (formData) {
+            propertyActions.addProperty(formData);
+        };
     }
 
     return (
@@ -76,7 +127,7 @@ const AddProperty = ({ hideAddForm }) => {
                             className="form-control" 
                             type="file"
                             id="propertyimage"
-                            ref={propertyimage}
+                            onChange={(event) => handleChangeFormField(event)}
                             multiple
                             required 
                         />
@@ -128,13 +179,12 @@ const AddProperty = ({ hideAddForm }) => {
                             onChange={(event) => handleChangeFormField(event)}
                             required
                         ></textarea>
-                        <label htmlFor="prpropertyavataropertyimage" className="form-label mt-3">Avatar</label>
+                        <label htmlFor="propertyavatar" className="form-label mt-3">Avatar</label>
                         <input 
                             className="form-control" 
                             type="file"
                             id="propertyavatar"
-                            ref={propertyavatar}
-                            multiple
+                            onChange={(event) => handleChangeFormField(event)}
                             required 
                         />
                         <label htmlFor="username" className="form-label mt-3">Username</label>
@@ -177,4 +227,13 @@ const AddProperty = ({ hideAddForm }) => {
     );
 }
 
-export default AddProperty;
+const mapStateToProps = (state) => ({
+    property: state.propertyReducer.property,
+    message: state.propertyReducer.message
+  })
+  
+  const mapDispatchToProps = (dispatch) => ({
+    propertyActions: bindActionCreators(propertyActions, dispatch)
+  })
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddProperty);

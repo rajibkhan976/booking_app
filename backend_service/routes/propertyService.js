@@ -9,6 +9,8 @@ var connection = mysql.createConnection({
     database: 'booking'
 });
 
+connection.connect();
+
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
 		cb(null, './uploads/');
@@ -26,25 +28,37 @@ const fileFilter = (req, file, cb) => {
 	}
 }
 
-const upload = multer({ storage:  storage, fileFilter: fileFilter }).array('propertyimage');
+const uploadMultiple = multer({ storage:  storage, fileFilter: fileFilter }).array('propertyImages');
+const uploadSingle = multer({ storage:  storage, fileFilter: fileFilter }).single('propertyAvatar');
 
 uploadPropertyImage = (req, res, next) => {
-	upload(req, res, function (error) {
+	uploadMultiple(req, res, function (error) {
 		if (error instanceof multer.MulterError) {
 			return res.status(500).send({"error": error});
 		} else if (error) {
 			return res.status(500).send({"error": error});
 		} else {
-			return res.status(200).send({"file": req.file, "message": `${req.file.filename} uploaded successfully`});
+			return res.status(200).send({"message": `Property images uploaded successfully`});
+		}
+	});
+}
+
+uploadPropertyAvatar = (req, res, next) => {
+	uploadSingle(req, res, function (error) {
+		if (error instanceof multer.MulterError) {
+			return res.status(500).send({"error": error});
+		} else if (error) {
+			return res.status(500).send({"error": error});
+		} else {
+			return res.status(200).send({"message": `Avatar uploaded successfully`});
 		}
 	});
 }
 
 getProperties = (req, res, next) => {
-	connection.connect();
 	connection.query({
 		sql: 'SELECT * FROM `property`',
-		timeout: 40000,
+		timeout: 40000
 	},
 	function (error, results, fields) {
 		if (results) {
@@ -61,12 +75,11 @@ getProperties = (req, res, next) => {
 			});
 		}
 	});
-	connection.end();
 }
 
 addProperty = (req, res, next) => {
 	let property = {
-		image: req.body.img,
+		image: req.body.image,
 		rating: req.body.rating,
 		title: req.body.title,
 		description: req.body.description,
@@ -98,11 +111,11 @@ addProperty = (req, res, next) => {
 			});
 		}
 	})
-	connection.end();
 }
 
 module.exports = {
 	uploadPropertyImage,
+	uploadPropertyAvatar,
 	getProperties,
 	addProperty
 };

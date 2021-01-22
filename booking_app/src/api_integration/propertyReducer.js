@@ -20,6 +20,34 @@ const propertyReducer = (state = initialState, action) => {
             message: action.data.message
         }
 
+        case 'UPLOAD_PROPERTY_IMAGES':
+
+        return { 
+            ...state, 
+            message: action.data.message
+        };
+
+        case 'UPLOAD_PROPERTY_IMAGES_FAILED':
+
+        return { 
+            ...state,
+            error: action.data.error
+        };
+
+        case 'UPLOAD_PROPERTY_AVATAR':
+
+        return { 
+            ...state, 
+            message: action.data.message
+        };
+
+        case 'UPLOAD_PROPERTY_AVATAR_FAILED':
+
+        return { 
+            ...state,
+            error: action.data.error
+        };
+
         default:
 
         return state;

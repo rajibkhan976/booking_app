@@ -52,7 +52,12 @@
   min-height: 200px;
 }
 
-.footer-container a:link {
+.footer-link {
+  color: black;
+  text-decoration: none;
+}
+
+.footer-link:hover {
   color: black;
   text-decoration: none;
 }

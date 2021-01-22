@@ -45,7 +45,7 @@ const SearchForm = ({}) => {
                         className="btn btn-primary"
                         onClick={(event) => searchProperty(event)}
                     >
-                        Search
+                    Search
                     </button>
                 </div>
             </div>

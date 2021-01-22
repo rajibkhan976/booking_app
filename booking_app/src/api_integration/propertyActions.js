@@ -35,3 +35,39 @@ export function addProperty(property) {
         })
     }
 }
+
+export function uploadPropertyImages(propertyImages) {
+    return function(dispatch) {
+        return Api.uploadPropertyImages(propertyImages)
+        .then((result) => {
+            return dispatch({
+                type: 'UPLOAD_PROPERTY_IMAGES',
+                data: result.data
+            });
+        })
+        .catch((error) => {
+            return dispatch({
+                type: 'UPLOAD_PROPERTY_IMAGES_FAILED',
+                data: `Uploading property images failed due to ${error}`
+            });
+        })
+    }
+}
+
+export function uploadPropertyAvatar(propertyAvatar) {
+    return function(dispatch) {
+        return Api.uploadPropertyAvatar(propertyAvatar)
+        .then((result) => {
+            return dispatch({
+                type: 'UPLOAD_PROPERTY_AVATAR',
+                data: result.data
+            });
+        })
+        .catch((error) => {
+            return dispatch({
+                type: 'UPLOAD_PROPERTY_AVATAR_FAILED',
+                data: `Uploading property avatar failed due to ${error}`
+            });
+        })
+    }
+}

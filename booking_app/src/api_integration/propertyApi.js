@@ -5,5 +5,13 @@ export function getProperties() {
 }
 
 export function addProperty(property) {
-    return apiClient.post(`/property`, { property });
+    return apiClient.post(`/property`, property);
+}
+
+export function uploadPropertyImages(propertyImages) {
+    return apiClient.post(`/images`, propertyImages);
+}
+
+export function uploadPropertyAvatar(propertyAvatar) {
+    return apiClient.post(`/avatar`, propertyAvatar);
 }
