@@ -5,9 +5,7 @@ FROM node:12-alpine
 WORKDIR /booking_app
 
 # install app dependencies
-COPY package.json ./
-
-COPY package-lock.json ./
+COPY package*.json ./
 
 RUN npm cache clean --force
 RUN npm install
