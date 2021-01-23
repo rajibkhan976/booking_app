@@ -2,7 +2,7 @@
 FROM node:12-alpine
 
 # set the working direction
-WORKDIR /booking_app
+WORKDIR /frontend_app
 
 # install app dependencies
 COPY package.json ./
