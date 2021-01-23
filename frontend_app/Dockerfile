@@ -5,10 +5,9 @@ FROM node:12-alpine
 WORKDIR /frontend_app
 
 # install app dependencies
-COPY package.json ./
+COPY package*.json ./
 
-COPY package-lock.json ./
-
+RUN npm cache clean --force
 RUN npm install
 
 # add app
