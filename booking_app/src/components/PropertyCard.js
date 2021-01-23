@@ -52,6 +52,7 @@ const PropertyCard = ({ propertyList, handlePropertyDetails }) => {
                                 <div className="card-body">
                                     {renderRating(element.rating)}
                                     <p className="card-text mt-3" style={{"fontSize": ".8rem"}}>{element.description}</p>
+                                    <p className="card-text mt-3" style={{"fontSize": ".8rem"}}>{`Comments: ${element.comments}`}</p>
                                     <div className="row">
                                         <div className="col-2">
                                             <img className="mt-2 avatar" src={imageUrl.concat(element.avatar)} alt="avatar" />
