@@ -1,23 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const SearchForm = ({}) => {
-
-    const [country, setCountry] = useState("");
-    const [city, setCity] = useState("");
-
-    const handleChangeSearchField = (event) => {
-        if (event.target.id === "country") {
-            setCountry(event.target.value);
-        }
-        if (event.target.id === "city") {
-            setCity(event.target.value);
-        }
-    }
-
-    const searchProperty = (event) => {
-        console.log(country);
-        console.log(city);
-    }
+const SearchForm = ({ handleChangeSearchField, searchProperty }) => {
 
     return (
         <div className="col-12">

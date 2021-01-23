@@ -65,3 +65,9 @@
 .social-media-part {
   border-top: 1px solid slategrey;
 }
+
+.avatar {
+  max-width: 25px;
+  height: 25px;
+  border-radius: 50%;
+}

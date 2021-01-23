@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
 
 const initialState = {
-    properties: []
+    properties: [],
+    propertiesRetrieved: false
 };
 
 const propertyReducer = (state = initialState, action) => {
@@ -10,14 +11,19 @@ const propertyReducer = (state = initialState, action) => {
 
         case 'GET_PROPERTIES':
 
-        return { ...state, properties: action.data };
+        return { 
+            ...state, 
+            properties: action.data,
+            propertiesRetrieved: true
+        };
 
         case 'ADD_PROPERTY':
 
         return { 
             ...state,
             property: action.data.property,
-            message: action.data.message
+            message: action.data.message,
+            propertiesRetrieved: false
         }
 
         case 'UPLOAD_PROPERTY_IMAGES':

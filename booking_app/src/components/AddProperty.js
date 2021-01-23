@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as propertyActions from "../api_integration/propertyActions";
 
-const AddProperty = ({ hideAddForm, propertyActions }) => {
+const AddProperty = ({ hideAddForm, propertyActions, message }) => {
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -106,6 +106,12 @@ const AddProperty = ({ hideAddForm, propertyActions }) => {
             propertyActions.addProperty(formData);
         };
     }
+
+    useEffect((event) => {
+        if (message && message === "Property added successfully") {
+            hideAddForm(event);
+        }
+    }, [message]);
 
     return (
         <div className="row">
@@ -230,10 +236,10 @@ const AddProperty = ({ hideAddForm, propertyActions }) => {
 const mapStateToProps = (state) => ({
     property: state.propertyReducer.property,
     message: state.propertyReducer.message
-  })
+});
   
-  const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch) => ({
     propertyActions: bindActionCreators(propertyActions, dispatch)
-  })
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddProperty);

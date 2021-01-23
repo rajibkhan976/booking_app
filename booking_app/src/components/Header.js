@@ -1,7 +1,7 @@
 import React from 'react';
 import SearchForm from './SearchForm';
 
-const Header = ({}) => {
+const Header = ({ handleChangeSearchField, searchProperty }) => {
 
     return (
         <div className="row header-container">
@@ -11,7 +11,10 @@ const Header = ({}) => {
                     <p>Treat yourself! Your dream resort stay is just a few clicks away.</p>
                 </div>
             </div>
-            <SearchForm />
+            <SearchForm
+                handleChangeSearchField={handleChangeSearchField}
+                searchProperty={searchProperty}
+            />
         </div>
     );
 }
