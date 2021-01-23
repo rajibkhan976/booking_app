@@ -9,6 +9,7 @@ COPY package.json ./
 
 COPY package-lock.json ./
 
+RUN npm cache clean --force
 RUN npm install
 
 # add app
